@@ -8,10 +8,10 @@ export const gradesTools = [
       type: "object",
       properties: {
         academic_year: { type: "string", description: "e.g. 2024-2025" },
-        semester: { type: "string", enum: ["1", "2"], description: "1 = Fall, 2 = Spring" },
+        semester: { type: "string", enum: ["FALL", "SPRING"], description: "FALL or SPRING" },
         course_status: {
           type: "string",
-          enum: ["REGULAR", "ELECTIVE", "ALL"],
+          enum: ["ACTIVE_CURRICULUM", "ELECTIVE", "ALL"],
           description: "Filter by course type. Defaults to ALL.",
         },
       },

@@ -8,7 +8,7 @@ export const attendanceTools = [
       type: "object",
       properties: {
         academic_year: { type: "string", description: "e.g. 2024-2025" },
-        semester: { type: "string", enum: ["1", "2"], description: "1 = Fall, 2 = Spring" },
+        semester: { type: "string", enum: ["FALL", "SPRING"], description: "FALL or SPRING" },
       },
       required: ["academic_year", "semester"],
     },
