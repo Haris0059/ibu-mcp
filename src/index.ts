@@ -3,13 +3,15 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { studentTools } from "./tools/student.js";
 import { gradesTools } from "./tools/grades.js";
+import { attendanceTools } from "./tools/attendance.js";
+import { notificationTools } from "./tools/notifications.js";
 
 const server = new McpServer({
   name: "ibu-mcp",
   version: "0.1.0",
 });
 
-function registerTools(tools: typeof studentTools | typeof gradesTools) {
+function registerTools(tools: typeof studentTools | typeof gradesTools | typeof attendanceTools | typeof notificationTools) {
   for (const tool of tools) {
     const shape: Record<string, z.ZodTypeAny> = {};
     const props = (tool.inputSchema as { properties: Record<string, { type: string; enum?: string[]; description?: string }> }).properties;
@@ -43,6 +45,8 @@ function registerTools(tools: typeof studentTools | typeof gradesTools) {
 
 registerTools(studentTools);
 registerTools(gradesTools);
+registerTools(attendanceTools);
+registerTools(notificationTools);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
