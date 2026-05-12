@@ -33,7 +33,7 @@ IBU_USER_JWT=<your sis-user-token>
 
 1. Log in to [mine.ibu.edu.ba](https://mine.ibu.edu.ba)
 2. Open DevTools → Network tab
-3. Reload the page and click any API request going to `api.ibu.edu.ba`
+3. Reload the page and click any API request going to `rest.ibu.edu.ba`
 4. Copy the `sis-access-token` and `sis-user-token` request headers into `.env`
 
 Tokens expire when your session ends — re-copy them when you get auth errors.
