@@ -26,6 +26,10 @@ export async function ibufetch(path: string, init: RequestInit = {}): Promise<un
   const message = ERROR_MESSAGES[response.status];
   if (message) throw new Error(message);
 
+  if (response.status === 500) {
+    throw new Error(`The IBU API is returning a 500 Internal Server Error for this request — this appears to be a server-side issue on IBU's end, not a problem with the tool.\n\nYou can try again in a few minutes, or check directly on the IBU student portal.`);
+  }
+
   if (!response.ok) {
     throw new Error(`IBU API error ${response.status}: ${response.statusText}`);
   }
