@@ -5,13 +5,15 @@ import { studentTools } from "./tools/student.js";
 import { gradesTools } from "./tools/grades.js";
 import { attendanceTools } from "./tools/attendance.js";
 import { notificationTools } from "./tools/notifications.js";
+import { financesTools } from "./tools/finances.js";
+import { activitiesTools } from "./tools/activities.js";
 
 const server = new McpServer({
   name: "ibu-mcp",
   version: "0.1.0",
 });
 
-function registerTools(tools: typeof studentTools | typeof gradesTools | typeof attendanceTools | typeof notificationTools) {
+function registerTools(tools: typeof studentTools | typeof gradesTools | typeof attendanceTools | typeof notificationTools | typeof financesTools | typeof activitiesTools) {
   for (const tool of tools) {
     const shape: Record<string, z.ZodTypeAny> = {};
     const props = (tool.inputSchema as { properties: Record<string, { type: string; enum?: string[]; description?: string }> }).properties;
@@ -47,6 +49,8 @@ registerTools(studentTools);
 registerTools(gradesTools);
 registerTools(attendanceTools);
 registerTools(notificationTools);
+registerTools(financesTools);
+registerTools(activitiesTools);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
