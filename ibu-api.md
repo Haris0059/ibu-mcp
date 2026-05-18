@@ -28,7 +28,7 @@ Referer: https://mine.ibu.edu.ba/
 
 | Method | Path | Response |
 |--------|------|----------|
-| GET | `student/get_student_image/` | `{image: "<base64>"}` or `{}` — fallback to `google_avatar` from JWT |
+| GET | `student/get_student_image/{user_id}` | `{image: "<base64>"}` or `{}` — fallback to `google_avatar` from JWT. `user_id` is the `id` from the JWT payload |
 | GET | `student/get_active_sanctions` | `[]` or array of sanctions |
 
 ---
@@ -132,12 +132,44 @@ Referer: https://mine.ibu.edu.ba/
 
 ## Graduation
 
+> Called with a **leading slash** in the SPA (e.g. `/student/graduation_status`).
+
 | Method | Path |
 |--------|------|
 | GET | `student/graduation_status` |
 | GET | `student/graduation_data` |
 | GET | `student/graduation_survey_status` |
 | POST | `student/graduation_survey` |
+
+---
+
+## Reference Data
+
+> Lookup endpoints used by the SPA to populate dropdowns and resolve IDs.
+
+| Method | Path | Response |
+|--------|------|----------|
+| GET | `data/settings/active_academic_years` | Active academic years list |
+| GET | `data/settings/active_academic_semesters` | Active academic semesters list |
+| GET | `data/get_city_by_id/{id}` | City record |
+| GET | `data/get_country_by_id/{id}` | Country record |
+
+---
+
+## Surveys
+
+> Course/professor evaluation surveys. A `301` response from any other endpoint indicates a mandatory survey is pending.
+
+| Method | Path | Params | Response |
+|--------|------|--------|----------|
+| GET | `survey/get_active_survey` | — | Active survey id / metadata |
+| GET | `survey/get_active_student_institution` | — | Student institution context for the active survey |
+| GET | `survey/get_student_survey_status` | — | Completion status for the current student |
+| GET | `survey/get_student_courses` | — | Courses the student must evaluate |
+| GET | `survey/get_survey_sections` | — | Sections defined on the active survey |
+| GET | `survey/get_sections_from_survey` | — | Sections for a given survey (used after selecting one) |
+| GET | `survey/get_questions_list/{type}` | type observed: `PROFESSOR_ASSISTANT` | Question list for the given evaluation type |
+| POST | `survey/save_results` | body: survey response payload | — |
 
 ---
 
