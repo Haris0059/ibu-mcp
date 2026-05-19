@@ -1,7 +1,33 @@
 {
   "name": "ibu-mcp",
   "version": "0.1.0",
-  "description": "MCP server for IBU student information system",
+  "description": "MCP server for the International Burch University (IBU) student information system — query grades, attendance, exams, tuition, and notifications via Claude Code or Gemini CLI.",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "claude-code",
+    "anthropic",
+    "gemini",
+    "gemini-cli",
+    "ibu",
+    "international-burch-university",
+    "university",
+    "student-portal",
+    "ai-tools",
+    "llm-tools"
+  ],
+  "license": "MIT",
+  "author": "Haris Skeledzija",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Haris0059/ibu-mcp.git"
+  },
+  "homepage": "https://github.com/Haris0059/ibu-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/Haris0059/ibu-mcp/issues"
+  },
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

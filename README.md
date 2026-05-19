@@ -1,6 +1,8 @@
 # ibu-mcp
 
-MCP server for the International Burch University student information system (mine.ibu.edu.ba). Lets you query grades, attendance, finances, notifications, and more via Claude Code or Gemini CLI.
+A [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server for the **International Burch University (IBU)** student information system at [mine.ibu.edu.ba](https://mine.ibu.edu.ba). Connects IBU's student portal to [Claude Code](https://claude.com/claude-code), [Gemini CLI](https://github.com/google-gemini/gemini-cli), or any other MCP-compatible client, so you can query your grades, attendance, exam schedule, tuition installments, scholarship points, and notifications in natural language.
+
+Built for IBU students who want to skip the click-around and just ask: *"what's my GPA?"*, *"when's my next exam?"*, *"what do I owe this semester?"*.
 
 ## Requirements
 
