@@ -52,6 +52,30 @@ export const financesTools = [
     },
   },
   {
+    name: "ibu_get_student_contracts",
+    description: "Returns the list of tuition contracts on the student's account.",
+    inputSchema: { type: "object", properties: {}, required: [] },
+    async handler(_input: Record<string, never>) {
+      const data = await ibufetch("student/get_student_contracts");
+      return JSON.stringify(data, null, 2);
+    },
+  },
+  {
+    name: "ibu_get_annex_details",
+    description: "Returns the line items for a specific contract annex.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        annex_id: { type: "string", description: "Annex ID from ibu_get_annexes." },
+      },
+      required: ["annex_id"],
+    },
+    async handler(input: { annex_id: string }) {
+      const data = await ibufetch(`student/get_annex_details/${input.annex_id}`);
+      return JSON.stringify(data, null, 2);
+    },
+  },
+  {
     name: "ibu_get_non_tuition_fees",
     description: "Returns non-tuition fees (e.g. library, lab, parking) for a given academic year.",
     inputSchema: {
