@@ -72,6 +72,36 @@ export const activitiesTools = [
     },
   },
   {
+    name: "ibu_get_student_activity",
+    description: "Returns details for a single scholarship activity by ID.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Activity ID." },
+      },
+      required: ["id"],
+    },
+    async handler(input: { id: string }) {
+      const data = await ibufetch(`student/get_student_activity/${input.id}`);
+      return JSON.stringify(data, null, 2);
+    },
+  },
+  {
+    name: "ibu_delete_student_activity",
+    description: "Deletes a scholarship activity entry by ID. Destructive — the entry is removed permanently.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Activity ID to delete." },
+      },
+      required: ["id"],
+    },
+    async handler(input: { id: string }) {
+      const data = await ibufetch(`student/delete_student_activity/${input.id}`, { method: "DELETE" });
+      return JSON.stringify(data, null, 2);
+    },
+  },
+  {
     name: "ibu_get_activity_overview",
     description: "Returns a summary of the student's activity points — applied, pending, realized — for a given academic year and optional semester.",
     inputSchema: {

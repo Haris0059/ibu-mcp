@@ -1,6 +1,6 @@
 {
   "name": "ibu-mcp",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "MCP server for the International Burch University (IBU) student information system — query grades, attendance, exams, tuition, and notifications via Claude Code or Gemini CLI.",
   "keywords": [
     "mcp",
