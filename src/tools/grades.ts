@@ -76,6 +76,23 @@ export const gradesTools = [
     },
   },
   {
+    name: "ibu_get_syllabus",
+    description: "Returns the syllabus for a course in a given academic year and semester.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        course_id: { type: "string", description: "Course ID from ibu_get_curriculum or ibu_get_grades." },
+        academic_year: { type: "string", description: "e.g. 2024-2025" },
+        semester: { type: "string", enum: ["FALL", "SPRING"], description: "FALL or SPRING" },
+      },
+      required: ["course_id", "academic_year", "semester"],
+    },
+    async handler(input: { course_id: string; academic_year: string; semester: string }) {
+      const data = await ibufetch(`student/get_syllabus/${input.course_id}/${input.academic_year}/${input.semester}`);
+      return JSON.stringify(data, null, 2);
+    },
+  },
+  {
     name: "ibu_get_academic_years",
     description: "Returns the list of academic years the student has been enrolled in.",
     inputSchema: { type: "object", properties: {}, required: [] },
