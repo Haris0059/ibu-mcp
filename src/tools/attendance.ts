@@ -32,4 +32,13 @@ export const attendanceTools = [
       return JSON.stringify(data, null, 2);
     },
   },
+  {
+    name: "ibu_get_preferred_attendance",
+    description: "Returns the student's preferred attendance mode for the current semester (null, 'online', or 'combined').",
+    inputSchema: { type: "object", properties: {}, required: [] },
+    async handler() {
+      const data = await ibufetch("student/get_preferred_attendence");
+      return JSON.stringify(data, null, 2);
+    },
+  },
 ] as const;
