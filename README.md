@@ -85,28 +85,16 @@ In the ChatGPT desktop UI, you can alternatively open **Settings → MCP servers
 
 ### 5. Register with Claude Code
 
-**macOS:**
+Run from inside the `ibu-mcp` project directory:
 
 ```bash
-claude mcp add ibu-mcp node /Users/$(whoami)/Projects/ibu-mcp/dist/index.js
-```
-
-**Linux:**
-
-```bash
-claude mcp add ibu-mcp node /home/$(whoami)/Projects/ibu-mcp/dist/index.js
-```
-
-Or use an absolute path directly:
-
-```bash
-claude mcp add ibu-mcp node /absolute/path/to/ibu-mcp/dist/index.js
+claude mcp add ibu-mcp node "$(pwd)/dist/index.js"
 ```
 
 **Dev mode** (no build step, runs TypeScript directly):
 
 ```bash
-claude mcp add ibu-mcp npx tsx /absolute/path/to/ibu-mcp/src/index.ts
+claude mcp add ibu-mcp npx tsx "$(pwd)/src/index.ts"
 ```
 
 Verify it's registered:
