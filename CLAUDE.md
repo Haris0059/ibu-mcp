@@ -10,9 +10,10 @@ A stdio MCP server (`@modelcontextprotocol/sdk`) exposing IBU student-portal dat
 
 - `npm run dev` — run via `tsx` (no build step)
 - `npm run build` — `tsc` to `dist/`
+- `npm run test:mcp` — build and run a credential-free MCP handshake/schema test
 - `npm start` — run built server from `dist/index.js`
 
-There is no test framework and no linter configured.
+There is no general unit-test framework and no linter configured.
 
 ## Stdio MCP — do not write to stdout
 
@@ -22,7 +23,8 @@ The server uses `StdioServerTransport`. **stdout is the MCP protocol channel.** 
 
 - All MCP tool names use the `ibu_<verb>_<noun>` prefix (e.g., `ibu_get_grades`, `ibu_mark_notification_read`).
 - Tools are defined as entries in a domain-grouped array in `src/tools/<domain>.ts` with `name`, `description`, `inputSchema` (JSON Schema with `properties`/`required`), and `handler`.
-- Register the array in `src/index.ts` via `registerTools(...)`. The registrar in `src/index.ts` converts the JSON Schema shape into zod and wires error handling — match the existing shape so the conversion keeps working (string properties, optional `enum`, `description`).
+- Register the array in `src/index.ts` via `registerTools(...)`. The registrar converts the JSON Schema shape into zod and wires MCP error handling. Supported property types are string, number, integer, and boolean, with optional string `enum` and `description` values.
+- Add state-changing tools to `writeTools` in `src/index.ts`, and irreversible tools to `destructiveTools`, so MCP clients such as Codex receive accurate tool annotations.
 
 ## Error handling convention
 
@@ -32,8 +34,8 @@ The server uses `StdioServerTransport`. **stdout is the MCP protocol channel.** 
 
 ## Auth tokens
 
-`IBU_ACCESS_TOKEN` and `IBU_USER_JWT` come from the user's browser session (DevTools → Network on `rest.ibu.edu.ba`). The JWT expires when the session ends — a 401 means the user needs to re-copy the header, not a code change.
+`IBU_ACCESS_TOKEN` and `IBU_USER_JWT` come from the user's browser session (DevTools → Network on `rest.ibu.edu.ba`). `.env` is resolved relative to the package root because MCP clients may use an unrelated working directory. The JWT expires when the session ends — a 401 means the user needs to re-copy the header, not a code change.
 
 ## Verify before "done"
 
-After edits, run `npm run build` and confirm a clean compile. The TS config is `strict` — type errors are not warnings.
+After edits, run `npm run test:mcp` and confirm a clean compile and handshake. The TS config is `strict` — type errors are not warnings.

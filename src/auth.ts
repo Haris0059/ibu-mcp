@@ -1,4 +1,11 @@
-import "dotenv/config";
+import { config } from "dotenv";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// MCP clients may launch the server from any working directory. Resolve .env
+// relative to this package so credentials do not depend on the client's cwd.
+const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+config({ path: resolve(packageRoot, ".env"), quiet: true });
 
 export interface StudentIdentity {
   id: number;
@@ -6,6 +13,8 @@ export interface StudentIdentity {
   first_name: string;
   last_name: string;
   email: string;
+  status?: string;
+  city?: unknown;
 }
 
 function decodeJwtPayload(token: string): Record<string, unknown> {
@@ -29,12 +38,27 @@ export function loadAuth(): { accessToken: string; userJwt: string; identity: St
     throw new Error("IBU_USER_JWT is not a valid JWT. Check your .env file.");
   }
 
+  // Current IBU tokens nest student claims under `data`; older tokens exposed
+  // the same claims at the payload root.
+  const nestedData = payload.data;
+  const claims = nestedData && typeof nestedData === "object" && !Array.isArray(nestedData)
+    ? nestedData as Record<string, unknown>
+    : payload;
+
+  const id = typeof claims.id === "number" ? claims.id : Number(claims.id);
+  const requiredStrings = ["student_id", "first_name", "last_name", "email"] as const;
+  if (!Number.isFinite(id) || requiredStrings.some((key) => typeof claims[key] !== "string")) {
+    throw new Error("IBU_USER_JWT does not contain the expected student identity claims. Re-copy it from DevTools.");
+  }
+
   const identity: StudentIdentity = {
-    id: payload.id as number,
-    student_id: payload.student_id as string,
-    first_name: payload.first_name as string,
-    last_name: payload.last_name as string,
-    email: payload.email as string,
+    id,
+    student_id: claims.student_id as string,
+    first_name: claims.first_name as string,
+    last_name: claims.last_name as string,
+    email: claims.email as string,
+    ...(typeof claims.status === "string" ? { status: claims.status } : {}),
+    ...(claims.city !== undefined ? { city: claims.city } : {}),
   };
 
   return { accessToken, userJwt, identity };

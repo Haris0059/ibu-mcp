@@ -1,7 +1,7 @@
 {
   "name": "ibu-mcp",
   "version": "0.1.5",
-  "description": "MCP server for the International Burch University (IBU) student information system — query grades, attendance, exams, tuition, and notifications via Claude Code or Gemini CLI.",
+  "description": "MCP server for the International Burch University (IBU) student information system — query grades, attendance, exams, tuition, and notifications via Codex, ChatGPT, Claude, or Gemini.",
   "keywords": [
     "mcp",
     "mcp-server",
@@ -9,6 +9,9 @@
     "claude",
     "claude-code",
     "anthropic",
+    "codex",
+    "chatgpt",
+    "openai",
     "gemini",
     "gemini-cli",
     "ibu",
@@ -33,7 +36,8 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test:mcp": "npm run build && node scripts/smoke-mcp.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
